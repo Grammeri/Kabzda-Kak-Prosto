@@ -1,47 +1,44 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
-import OnOff from "./component/OnOff/OnOff";
-import UncontrolledAccordion from "./component/UncontrolledAccordion/Accordion";
-import UncontrolledRating from "./component/UncontrolledRating/Rating";
-
+import {RatingValueType, UncontrolledRatingRefactored} from "./Components/UncontrolledRatingRefactored";
+import {UncontrolledRating} from "./Components/UncontrolledRating";
+import {AccordionPropsType, ControlledAccordion} from "./Components/ControlledAccordion";
+import {ControlledOnOff} from "./Components/ControlledOnOff";
+import {UnControlledOnOff} from "./Components/UnControlledOnOff";
 
 function App() {
-    console.log("App rendering")
+    let [ratingValue, setRatingValue] = useState<RatingValueType>(0)
+    let [value, setValue] = useState<RatingValueType>(0)
+    let [accordionCollapsed, setAccordionCollapsed] = useState<boolean>(false)
+    let [switchOn, setSwitchOn] = useState<boolean>(false)
+    let [switchOnB, setSwitchOnB] = useState<boolean>(false)
+
+
+
     return (
-        <div className={"App"}>
-            <UncontrolledAccordion titleValue={"Menu"} />
+        <div className="App">
+            <b>---Uncontrolled--- </b>
+            <UncontrolledRating value={ratingValue}
+                                onClick={setRatingValue}/>
 
+            <b>---UncontrolledRefactored---</b>
+            <UncontrolledRatingRefactored setValue={setValue}
+                                          value={value}/>
+            <b>ControlledAccordion</b>
+            <ControlledAccordion title={"ControlledAccordion"}
+                                 collapsed={accordionCollapsed}
+                                 onChange={() => {
+                                     setAccordionCollapsed(!accordionCollapsed)
+                                 }}/>
+            <b>---ControlledOnOff---</b>
+            <ControlledOnOff on={switchOn}
+                             onChange={setSwitchOn}/>
 
-            <UncontrolledRating  />
-
-            {/*<Rating value = {0}/>
-            <Rating value = {1}/>
-            <Rating value = {2}/>
-            <Rating value = {3}/>
-            <Rating value = {4}/>
-            <Rating value = {4}/>*/}
-
-            <OnOff/>
-
-
+            <b>---UnControlledOnOff---</b>
+            <UnControlledOnOff onChange={setSwitchOnB}/>{switchOnB.toString()}
         </div>
     );
 }
 
-type PageTitlePropsType = {
-    title: string
-}
-
-function PageTitle(props: PageTitlePropsType) {
-    debugger
-    console.log("PageTitle rendering")
-    return (
-        <h1>
-            {props.title}
-        </h1>
-    );
-}
-
-
-
 export default App;
+
