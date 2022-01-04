@@ -1,5 +1,10 @@
 import React from "react";
 
+export type ItemType = {
+    value:any
+    title:string
+}
+
 export type AccordionPropsType = {
     title:string
     collapsed:boolean
@@ -9,13 +14,17 @@ export type AccordionPropsType = {
      * Color of header
      */
     color?:string
+    items:ItemType[]
+    onClick: (value:any)=>void
 }
 
 export function ControlledAccordionRefactored(props: AccordionPropsType) {
     return (
         <div>
-            <Title title={props.title} onChange={props.onChange} color={props.color}/>
-            {!props.collapsed && <Body/>}
+            <Title title={props.title}
+                   onChange={props.onChange}
+                   color={props.color}/>
+            {!props.collapsed && <Body items={items}/>}
         </div>
     )
 }
@@ -36,13 +45,15 @@ function Title(props: TitlePropsType) {
     )
 }
 
-function Body(props: any) {
+type BodyPropsType = {
+    items:string[]
+}
+
+function Body(props: BodyPropsType) {
     return (
         <div>
             <ul>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
+                {props.items.map(i=> <li>{i}</li>)}
             </ul>
         </div>
     )

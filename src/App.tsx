@@ -1,44 +1,96 @@
 import React, {useState} from 'react';
 import './App.css';
-import {RatingValueType, UncontrolledRatingRefactored} from "./Components/UncontrolledRatingRefactored";
-import {UncontrolledRating} from "./Components/UncontrolledRating";
-import {AccordionPropsType, ControlledAccordion} from "./Components/ControlledAccordion";
-import {ControlledOnOff} from "./Components/ControlledOnOff";
-import {UnControlledOnOff} from "./Components/UnControlledOnOff";
+import {ControlledAccordion} from "./Components/Accordion/ControlledAccordion";
+import {UncontrolledAccordion} from "./Components/Accordion/UncontrolledAccordion";
+import {ControlledRating} from "./Components/rating/ControlledRating";
+import {ControlledAccordionRefactored} from "./Components/Accordion/ControlledAccordionRefactored";
+import {UncontrolledRating} from "./Components/rating/UncontrolledRating";
+import {ControlledRatingRefactored} from "./Components/rating/ControlledRatingRefactored";
+import {UncontrolledAccordionWithOutToggle} from "./Components/Accordion/UncontrolledAccordionWithOutTaggle";
+import {
+    RatingValueType,
+    UncontrolledRatingWithUseStateInApp
+} from "./Components/rating/UncontrolledRatingWithUseStateInApp";
+import {Accordion14} from "./Components/Accordion/Accordion14";
 
 function App() {
-    let [ratingValue, setRatingValue] = useState<RatingValueType>(0)
-    let [value, setValue] = useState<RatingValueType>(0)
-    let [accordionCollapsed, setAccordionCollapsed] = useState<boolean>(false)
-    let [switchOn, setSwitchOn] = useState<boolean>(false)
-    let [switchOnB, setSwitchOnB] = useState<boolean>(false)
-
-
-
+    let[ratingValue, setRatingValue] = useState<RatingValueType>(5)
     return (
         <div className="App">
-            <b>---Uncontrolled--- </b>
-            <UncontrolledRating value={ratingValue}
-                                onClick={setRatingValue}/>
+            <ControlledAccordion title={"ControlledAccordion No.1"} collapsed={false} />
+            <ControlledAccordionRefactored title={"ControlledAccordion No.2 Refactored"} collapsed={true}/>
+            <UncontrolledAccordion title={"Uncontrolled Accordion No.1"}/>
+            <UncontrolledAccordionWithOutToggle title={"Uncontrolled Accordion Without Toggle"}/>
 
-            <b>---UncontrolledRefactored---</b>
-            <UncontrolledRatingRefactored setValue={setValue}
-                                          value={value}/>
-            <b>ControlledAccordion</b>
-            <ControlledAccordion title={"ControlledAccordion"}
-                                 collapsed={accordionCollapsed}
-                                 onChange={() => {
-                                     setAccordionCollapsed(!accordionCollapsed)
-                                 }}/>
-            <b>---ControlledOnOff---</b>
-            <ControlledOnOff on={switchOn}
-                             onChange={setSwitchOn}/>
+            <b>Controlled Rating</b>
+            <ControlledRating value={5} />
 
-            <b>---UnControlledOnOff---</b>
-            <UnControlledOnOff onChange={setSwitchOnB}/>{switchOnB.toString()}
+            <b>Uncontrolled Rating</b>
+            <UncontrolledRating />
+
+            <b>Uncontrolled Rating with useState in APP</b>
+            <UncontrolledRatingWithUseStateInApp value={ratingValue}
+            onClick={setRatingValue}/>
+
+            <b>Refactored Controlled Rating</b>
+            <ControlledRatingRefactored value={1} />
+            <ControlledRatingRefactored value={2} />
+            <ControlledRatingRefactored value={3} />
+            <ControlledRatingRefactored value={4} />
+            <ControlledRatingRefactored value={5} />
+
+            <b>ON/OFF</b>
+            <OnOff/>
+
+
         </div>
     );
 }
 
-export default App;
+type OnOffPropsType = {
 
+}
+
+function OnOff (props:OnOffPropsType){
+    const [on, setOn] = useState(false)
+
+    const onStyle = {
+        width: "50px",
+        height: "50px",
+        backgroundColor: on ? "green" : "white",
+        padding:"2px",
+        display:"inline-block",
+        marginLeft: "10px",
+        border:"1px solid black"
+    }
+    const offStyle = {
+        width: "50px",
+        height: "50px",
+        backgroundColor: on ? "white" : "red",
+        padding:"2px",
+        display:"inline-block",
+        marginLeft: "10px",
+        border:"1px solid black"
+    }
+    const bulbStyle = {
+        width: "50px",
+        height: "50px",
+        border:"1px solid black",
+        borderRadius:"30px",
+        display:"inline-block",
+        marginLeft: "10px",
+        backgroundColor: on ? "green" : "red"
+    }
+
+
+    return(
+        <div>
+            <div style={onStyle} onClick={()=>{setOn(true)}}>ON</div>
+            <div style={offStyle} onClick={()=>{setOn(false)}}>OFF</div>
+            <div style={bulbStyle}></div>
+
+        </div>
+    )
+}
+
+export default App;

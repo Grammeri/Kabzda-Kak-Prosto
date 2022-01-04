@@ -1,36 +1,39 @@
 import React from "react";
 
-export type AccordionPropsType = {
+type AccordionPropsType = {
     title:string
     collapsed:boolean
-    onChange:()=>void
 }
 
 export function ControlledAccordion(props: AccordionPropsType) {
+    if (props.collapsed === true){
     return (
         <div>
-            <Title title={props.title}
-            onChange={props.onChange}
-            />
-            {!props.collapsed && <Body/>}
+            <Title title={props.title}/>
+        </div>
+    )
+} else{
+    return(
+        <div>
+        <Title title={props.title}/>
+        <Body/>
         </div>
     )
 }
 
 type TitlePropsType = {
     title: string
-    onChange:()=>void
 }
 
 function Title(props: TitlePropsType) {
     return (
         <div>
-            <h3 onClick={props.onChange}>{props.title}</h3>
+            <h3>{props.title}</h3>
         </div>
     )
 }
 
-function Body() {
+function Body(props: any) {
     return (
         <div>
             <ul>
@@ -40,4 +43,4 @@ function Body() {
             </ul>
         </div>
     )
-}
+}}
